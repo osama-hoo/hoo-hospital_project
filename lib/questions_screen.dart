@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -65,9 +66,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             onTap: () {
                               if (Constants.toBeAskedQuestion[0].type ==
                                   "multi") {setState(() {
-                                currentOptions[index].isSelected=true;
+                                currentOptions[index].isSelected=currentOptions[index].isSelected? false :true;
                                   });
-
                                 listOfSelectedOptions
                                     .add(currentOptions[index]);
                               } else {
@@ -111,7 +111,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           Constants.toBeAskedQuestion.isNotEmpty
               ? Constants.toBeAskedQuestion[0].next.isNotEmpty
                   ? MaterialButton(
-                      color: Colors.red,
+                      color: Color(0xff00CCCC),
                       height: 4.h,
                       minWidth: 10.h,
                       child: Text(
@@ -119,14 +119,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        setState(() {
-                          Constants.toBeAskedQuestion.add(Constants
-                              .questionsData.questions
-                              .where((element) =>
-                                  element.name == userSelectedValue.next)
-                              .first);
-                          Constants.toBeAskedQuestion.removeAt(0);
-                        });
+                        Timer(Duration(seconds: 30), (){
+                          setState(() {
+                            Constants.toBeAskedQuestion.add(Constants
+                                .questionsData.questions
+                                .where((element) =>
+                            element.name == userSelectedValue.next)
+                                .first);
+                            Constants.toBeAskedQuestion.removeAt(0);
+                          });
+
+                        },);
+
                       },
                     )
                   : Container()
@@ -158,7 +162,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
     });
   }
 
-  void proceedToNextQuestion() {
+  void proceedToNextQuestion()
+  {
     print("I am the issue");
     Constants.toBeAskedQuestion.add(Constants.questionsData.questions
         .where((element) => element.name == userSelectedValue.next)
