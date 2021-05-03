@@ -1,13 +1,9 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:sizer/sizer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:web_smiley/models/constants.dart';
 import 'package:web_smiley/models/question_model.dart';
 
-import 'models/card.dart';
+import 'models/constants.dart';
 
 class QuestionScreen extends StatefulWidget {
   @override
@@ -17,17 +13,15 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   // String userSelectedValue = "TwelveCoreSymptoms";
   List<Options> listOfOptions;
-  List<Options> listOfSelectedOptions=[];
+  List<Options> listOfSelectedOptions = [];
   Options userSelectedValue;
 
   @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Constants.toBeAskedQuestion.forEach((element) {
+      print(element.name + "\n");
+    });
+    print("--------------------/end here\--------------------");
     return Material(
       child: Column(
         children: [
@@ -84,10 +78,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               child: Text(
                                 currentOptions[index].label,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 14.sp),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp),
                               ),
                               decoration: BoxDecoration(
-                                color: currentOptions[index].isSelected ? Color(0xff00CCCC) : Colors.white,
+                                color: currentOptions[index].isSelected
+                                    ? Color(0xff00CCCC)
+                                    : Colors.white,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(10),
                                 ),
@@ -109,7 +106,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               : Container(),
 
           Constants.toBeAskedQuestion.isNotEmpty
-              ? Constants.toBeAskedQuestion[0].next.isNotEmpty
+              ? Constants.toBeAskedQuestion[0].type=="multi"
                   ? MaterialButton(
                       color: Color(0xff00CCCC),
                       height: 4.h,
@@ -119,18 +116,16 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        Timer(Duration(seconds: 30), (){
-                          setState(() {
+                        setState(() {
+                          listOfSelectedOptions.forEach((selectedOption) {
                             Constants.toBeAskedQuestion.add(Constants
                                 .questionsData.questions
                                 .where((element) =>
-                            element.name == userSelectedValue.next)
+                                    element.name == selectedOption.next)
                                 .first);
-                            Constants.toBeAskedQuestion.removeAt(0);
                           });
-
-                        },);
-
+                          Constants.toBeAskedQuestion.removeAt(0);
+                        });
                       },
                     )
                   : Container()
@@ -148,22 +143,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     );
   }
 
-  void fetchData() async {
-    String data =
-        await DefaultAssetBundle.of(context).loadString("assets/data.json");
-    final jsonResult = json.decode(data);
-
-    Constants.questionsData = QuestionsData.fromJson(jsonResult);
-
-    print(Constants.questionsData.questions.first.question);
-
-    setState(() {
-      Constants.toBeAskedQuestion = [Constants.questionsData.questions.first];
-    });
-  }
-
-  void proceedToNextQuestion()
-  {
+  void proceedToNextQuestion() {
     print("I am the issue");
     Constants.toBeAskedQuestion.add(Constants.questionsData.questions
         .where((element) => element.name == userSelectedValue.next)

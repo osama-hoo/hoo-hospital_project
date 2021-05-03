@@ -3,6 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:web_smiley/questions_screen.dart';
 
 import 'home_screen.dart';
+import 'home_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, screenType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: QuestionScreen() ,
+          home: HomeScreen() ,
         );
       },
     );
