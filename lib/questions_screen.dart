@@ -16,6 +16,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   List<Options> listOfSelectedOptions = [];
   Options userSelectedValue;
 
+
   @override
   Widget build(BuildContext context) {
     Constants.toBeAskedQuestion.forEach((element) {
@@ -34,7 +35,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       ? Constants.toBeAskedQuestion[0].question
                       : "",
                   style:
-                      TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w900),
+                  TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w900),
                 ),
               ),
             ),
@@ -43,102 +44,102 @@ class _QuestionScreenState extends State<QuestionScreen> {
           //Options
           Constants.toBeAskedQuestion.isNotEmpty
               ? Expanded(
-                  flex: 4,
-                  child: Container(
-                      padding: EdgeInsets.all(10.0),
-                      margin: EdgeInsets.all(10.0),
-                      child: Wrap(
-                        spacing: 10.0, // gap between adjacent chips
-                        runSpacing: 4.0, // gap between lines
-                        children: List.generate(
-                            Constants.toBeAskedQuestion[0].options.length,
-                            (index) {
-                          List<Options> currentOptions =
-                              Constants.toBeAskedQuestion[0].options;
+            flex: 4,
+            child: Container(
+                padding: EdgeInsets.all(10.0),
+                margin: EdgeInsets.all(10.0),
+                child: Wrap(
+                  spacing: 10.0, // gap between adjacent chips
+                  runSpacing: 4.0, // gap between lines
+                  children: List.generate(
+                      Constants.toBeAskedQuestion[0].options.length,
+                          (index) {
+                        List<Options> currentOptions =
+                            Constants.toBeAskedQuestion[0].options;
 
-                          return InkWell(
-                            onTap: () {
-                              if (Constants.toBeAskedQuestion[0].type ==
-                                  "multi") {
-                                setState(() {
-                                  currentOptions[index].isSelected = true;
-                                });
+                        return InkWell(
+                          onTap: () {
+                            if (Constants.toBeAskedQuestion[0].type ==
+                                "multi") {
+                              setState(() {
+                                currentOptions[index].isSelected = true;
+                              });
 
-                                listOfSelectedOptions
-                                    .add(currentOptions[index]);
-                              } else {
-                                userSelectedValue = currentOptions[index];
-                                setState(() {
-                                  proceedToNextQuestion();
-                                });
-                              }
-                              ;
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.all(10),
-                              child: Text(
-                                currentOptions[index].label,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.sp),
-                              ),
-                              decoration: BoxDecoration(
-                                color: currentOptions[index].isSelected
-                                    ? Color(0xff00CCCC)
-                                    : Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 4,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
+                              listOfSelectedOptions
+                                  .add(currentOptions[index]);
+                            } else {
+                              userSelectedValue = currentOptions[index];
+                              setState(() {
+                                proceedToNextQuestion();
+                              });
+                            }
+                            ;
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.all(10),
+                            child: Text(
+                              currentOptions[index].label,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp),
                             ),
-                          );
-                        }),
-                      )),
-                )
+                            decoration: BoxDecoration(
+                              color: currentOptions[index].isSelected
+                                  ? Color(0xff00CCCC)
+                                  : Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 4,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                )),
+          )
               : Container(),
 
           Constants.toBeAskedQuestion.isNotEmpty
-              ? Constants.toBeAskedQuestion[0].type=="multi"
-                  ? MaterialButton(
-                      color: Colors.red,
-                      height: 4.h,
-                      minWidth: 10.h,
-                      child: Text(
-                        "Next Step",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          listOfSelectedOptions.forEach((selectedOption) {
-                            Constants.toBeAskedQuestion.add(Constants
-                                .questionsData.questions
-                                .where((element) =>
-                                    element.name == selectedOption.next)
-                                .first);
-                          });
-                          Constants.toBeAskedQuestion.removeAt(0);
-                        });
-                      },
-                    )
-                  : Container()
+              ? Constants.toBeAskedQuestion[0].type == "multi"
+              ? MaterialButton(
+            color: Colors.red,
+            height: 4.h,
+            minWidth: 10.h,
+            child: Text(
+              "Next Step",
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              setState(() {
+                listOfSelectedOptions.forEach((selectedOption) {
+                  Constants.toBeAskedQuestion.add(Constants
+                      .questionsData.questions
+                      .where((element) =>
+                  element.name == selectedOption.next)
+                      .first);
+                });
+                Constants.toBeAskedQuestion.removeAt(0);
+              });
+            },
+          )
+              : Container()
               : Container(),
 
           ///for bottom logos
           Expanded(
             flex: 1,
             child: Container(
-                //  color: Colors.yellowAcwhcent,
-                ),
+              //  color: Colors.yellowAcwhcent,
+            ),
           )
         ],
       ),
