@@ -6,6 +6,9 @@ class Constants {
 
  static List<Questions> toBeAskedQuestion =[];
 
+ static List<String> wordsToBeBold =["having"];
+
+
 }
 
 

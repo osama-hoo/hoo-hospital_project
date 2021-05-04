@@ -54,12 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          setState(() {
-                            // listOfCards[index].isSelected = listOfCards[index].isSelected ?  false : true;
-                            //listOfCards[index].isSelected =! listOfCards[index].isSelected;
+                          if (index == 0 || index == 1 || index == 2)
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => QuestionScreen()));
-                          });
                         },
                         child: Container(
                           margin: EdgeInsets.all(2.h),
