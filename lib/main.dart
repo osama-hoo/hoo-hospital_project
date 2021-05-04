@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:web_smiley/questions_screen.dart';
+import 'package:web_smiley/survey_completed.dart';
 
+import 'home_screen.dart';
 import 'home_screen.dart';
 import 'home_screen.dart';
 

@@ -27,6 +27,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          ///for Questions
           Expanded(
             flex: 3,
             child: Container(
@@ -41,7 +42,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             ),
           ),
 
-          //Options
+          /// for Options
           Constants.toBeAskedQuestion.isNotEmpty
               ? Expanded(
                   flex: 4,
@@ -58,54 +59,60 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             List<Options> currentOptions =
                                 Constants.toBeAskedQuestion[0].options;
 
-                            return InkWell(
-                              onTap: () {
-                                if (Constants.toBeAskedQuestion[0].type ==
-                                    "multi") {
-                                  setState(() {
-                                    if (!currentOptions[index].isSelected) {
-                                      currentOptions[index].isSelected = true;
-                                      listOfSelectedOptions
-                                          .add(currentOptions[index]);
-                                    } else {
-                                      currentOptions[index].isSelected = false;
-                                      listOfSelectedOptions
-                                          .remove(currentOptions[index]);
-                                    }
-                                  });
-                                } else {
-                                  userSelectedValue = currentOptions[index];
-                                  setState(() {
-                                    proceedToNextQuestion();
-                                  });
-                                }
-                                ;
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.all(10),
-                                child: Text(
-                                  currentOptions[index].label,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14.sp),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: currentOptions[index].isSelected
-                                      ? Color(0xff00CCCC)
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
+                            return ClipRRect(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  if (Constants.toBeAskedQuestion[0].type ==
+                                      "multi") {
+                                    setState(() {
+                                      if (!currentOptions[index].isSelected) {
+                                        currentOptions[index].isSelected = true;
+                                        listOfSelectedOptions
+                                            .add(currentOptions[index]);
+                                      } else {
+                                        currentOptions[index].isSelected =
+                                            false;
+                                        listOfSelectedOptions
+                                            .remove(currentOptions[index]);
+                                      }
+                                    });
+                                  } else {
+                                    userSelectedValue = currentOptions[index];
+                                    setState(() {
+                                      proceedToNextQuestion();
+                                    });
+                                  }
+                                  ;
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    currentOptions[index].label,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 8.sp),
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 4,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
+                                  decoration: BoxDecoration(
+                                    color: currentOptions[index].isSelected
+                                        ? Color(0xff00CCCC)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
                                     ),
-                                  ],
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 1,
+                                        blurRadius: 4,
+                                        offset: Offset(
+                                            0, 3), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -156,25 +163,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
   Widget questionText(String originalQuestion) {
     List<TextSpan> question = [];
 
-
     List<String> breakString = originalQuestion.split(" ");
 
-    breakString.forEach((world) {
-
-      if(    Constants.wordsToBeBold.contains(world))
-        {
-
-          question.add(TextSpan(text: world + " ",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 22.sp)));
-        }
-      else
-
-        {
-          question.add(TextSpan(text: world + " ",style: TextStyle(fontWeight:FontWeight.normal,fontSize: 22.sp)));
-
-        }
-
-
+    breakString.forEach((word) {
+      if (Constants.wordsToBeBold.contains(word)) {
+        question.add(
+          TextSpan(
+            text: word + " ",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp),
+          ),
+        );
+      } else {
+        question.add(TextSpan(
+            text: word + " ",
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 22.sp)));
+      }
     });
+
     /// return
     return RichText(
       textAlign: TextAlign.center,
