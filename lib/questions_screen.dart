@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:web_smiley/models/constants.dart';
 import 'package:web_smiley/models/question_model.dart';
+import 'package:web_smiley/survey_completed.dart';
 
 import 'models/constants.dart';
 
@@ -135,11 +136,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       onPressed: () {
                         setState(() {
                           listOfSelectedOptions.forEach((selectedOption) {
-                            Constants.toBeAskedQuestion.add(Constants
-                                .questionsData.questions
+                            Questions q = Constants.questionsData.questions
                                 .where((element) =>
                                     element.name == selectedOption.next)
-                                .first);
+                                .first;
+                            if (!Constants.toBeAskedQuestion.contains(q)) {
+                              Constants.toBeAskedQuestion.add(q);
+                            }
                           });
                           Constants.toBeAskedQuestion.removeAt(0);
                         });
@@ -152,7 +155,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           Expanded(
             flex: 1,
             child: Container(
-                //  color: Colors.yellowAcwhcent,
+                //  color: Colors.yellowAccent,
                 ),
           )
         ],
@@ -200,10 +203,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
     print("I am the issue");
 
     if (userSelectedValue.next.isNotEmpty) {
-      Constants.toBeAskedQuestion.add(Constants.questionsData.questions
+      Questions q = Constants.questionsData.questions
           .where((element) => element.name == userSelectedValue.next)
-          .first);
+          .first;
+      if (!Constants.toBeAskedQuestion.contains(q)) {
+        Constants.toBeAskedQuestion.add(q);
+      }
       Constants.toBeAskedQuestion.removeAt(0);
+    } else if (Constants.toBeAskedQuestion.isNotEmpty) {
+      Constants.toBeAskedQuestion.removeAt(0);
+      if (Constants.toBeAskedQuestion.isEmpty)
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (builder) => LastPage()));
     }
   }
 }
