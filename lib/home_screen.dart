@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // color: Colors.white,
 
                 child: ListView.builder(
-                    itemCount: listOfCards.length,
+                    itemCount: listOfSurveyCards.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
@@ -86,14 +86,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 flex: 3,
                                 child: SvgPicture.asset(
-                                  listOfCards[index].image,
+                                  listOfSurveyCards[index].image,
                                   height: 7.h,
                                 ),
                               ),
                               Expanded(
                                   flex: 1,
                                   child: Text(
-                                    listOfCards[index].name,
+                                    listOfSurveyCards[index].name,
                                     style: TextStyle(
                                       fontSize: 10.sp,
                                       fontWeight: FontWeight.bold,

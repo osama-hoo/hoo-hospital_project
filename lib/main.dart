@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:web_smiley/dashborad/dashboard.dart';
 import 'package:web_smiley/questions_screen.dart';
 import 'package:web_smiley/survey_completed.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, screenType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: HomeScreen() ,
+          home: Dashboard() ,
         );
       },
     );
